@@ -15,8 +15,8 @@ ledRed = 3
 tempSensor = 4
 waterPump = 5
 
-displayInterval = 0.2 * 60 #How long should the display stay on?
-checkInterval = 0.2 * 60# seconds between loop
+displayInterval = 1 * 60 #How long should the display stay on?
+checkInterval = 10 * 60# seconds between loop
 lightThreshold = 10 # value at wich Light begins
 
 mlSecond = 20 # How much mililiter the waterpump produces per second
