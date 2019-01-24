@@ -7,8 +7,8 @@ from grovepi import *
 from grove_rgb_lcd import *
 
 # Connect the Grove Moisture Sensor to analog port A0, Light Sensor to A1, Display to IC2
-# Connect Red Led to D3, Temp Sensor to D4, display to 
-# SIG,NC,VCC,GND
+# Connect Red Led to D3, Temp Sensor to D4, UltrasonicRanger to D6
+
 moistSensor = 0
 lightSensor = 1
 ledRed = 3
@@ -22,7 +22,7 @@ sensorHeight = 73
 
 
 displayInterval = 1 * 60 #How long should the display stay on?
-checkInterval = 10 * 60# seconds between loop
+checkInterval = 10 * 60# How long before loop starts again?
 lightThreshold = 10 # value at wich Light begins
 
 mlSecond = 20 # How much mililiter the waterpump produces per second
@@ -61,29 +61,28 @@ def appendCSV():
                          })
 
 def waterPlants():
-    #digitalWrite(ledGreen,1) # Both lights burning now, indicate watering
     digitalwrite(waterPump,1)
     time.sleep(waterAmount/mlSecond)
     digitalwrite(waterPump,0)
     print("Watering complete at: " + time.ctime())
 
-
+# Main Loop
 lightsOn = True
 
 while True:
     try:
+        # Get Sensor readings
         lightValue = analogRead(lightSensor)
         distValue = ultrasonicRead(distSensor)
+        moist = analogRead(moistSensor)
+        [temp,humidity] = dht(tempSensor,0)  
+        currentTime = time.ctime()
         
         if lightValue <= lightThreshold:
             lightsOn = False
         else:
             lightsOn = True
             
-        moist = analogRead(moistSensor)
-        
-        currentTime = time.ctime()
-        
         if 0 <= moist and moist < 300:
             moistResult = 'Dry'
             digitalWrite(ledRed,1)
@@ -101,25 +100,19 @@ while True:
         
 #       printStatements
         print(currentTime)
-        # This example uses the blue colored sensor. = 0
-        # The first parameter is the port, the second parameter is the type of sensor.
-        try:
-            [temp,humidity] = dht(tempSensor,0)  
-            if math.isnan(temp) == False and math.isnan(humidity) == False:
-                print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(temp, humidity))
-        except IOError:
-            print ("Error")
-        
+        if math.isnan(temp) == False and math.isnan(humidity) == False:
+            print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(temp, humidity))
         print('Moisture value: {0} ({1})'.format(moist, moistResult))
         if lightsOn:
             print("Lights: {} (On)".format(lightValue))
         else:
             print("Lights: {} (Off)".format(lightValue))
-        print("Height: " + str(calcPlantHeight()) + " cm")
-        print("Raspberry pi: " + measurePi() + "'C\n")
-        
+        print("Height: {} cm".format(calcPlantHeight()))
+        print("Raspberry pi: {}'C\n".format(measurePi()))
         
         appendCSV()
+        
+        # Not use display when it's dark
         if lightsOn:
             displayText()
             # Time to next check minus display sleep
