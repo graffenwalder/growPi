@@ -1,3 +1,4 @@
+Time,Temperature,Humidity,MoistValue,MoistClass,LightValue,Lights,PiTemperature,Height
 Wed Jan 23 14:40:03 2019,18.0,50.0,573,Moist,306,True,36.5,
 Wed Jan 23 14:50:04 2019,18.0,51.0,574,Moist,281,True,40.2,
 Wed Jan 23 15:00:04 2019,19.0,50.0,571,Moist,307,True,39.7,
