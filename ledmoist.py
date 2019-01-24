@@ -107,7 +107,6 @@ while True:
             [temp,humidity] = dht(tempSensor,0)  
             if math.isnan(temp) == False and math.isnan(humidity) == False:
                 print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(temp, humidity))
-#                print("Temperature: %.02f'C\nHumidity: %.02f%%"%(temp, humidity))
         except IOError:
             print ("Error")
         
