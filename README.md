@@ -7,7 +7,7 @@ Data is saved to temp.csv.
 
 ## Setup
 
-Attach GrovePi+ to Raspberri pi
+Attach GrovePi+ to Raspberry pi
 In CLI:
 ```
 sudo curl -kL dexterindustries.com/update_grovepi | bash
@@ -15,7 +15,7 @@ sudo curl -kL dexterindustries.com/update_grovepi | bash
 After reboot for changes to take effect.
 See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) for more.
 
-### Connections;
+### Connections:
 - Moisture Sensor to A0
 - Light Sensor to A1
 - Red led to D3
@@ -32,7 +32,7 @@ Finaly run `ledmoist.py`
 - [x] Add Sensors: Moisture, Temperature, Humidity, Light
 - [x] Add red led as indicator for low moisture
 - [x] Add display, that displays current data
-- [x] Save senordata to csv file
+- [x] Save sensordata to csv file
 - [ ] Add waterpump
 - [ ] Write watering logic
 - [ ] Get stable sensor data from ultrasonic reader
