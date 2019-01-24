@@ -23,8 +23,8 @@ See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-th
 - Waterpump to D5
 - UltraSonicRanger to D6
 
-Feel free to use different connections, just be sure to change them in `ledmoist.py`.
-Finaly run `ledmoist.py`
+Feel free to use different connections, just be sure to change them in `growpi.py`.
+Finaly run `growpi.py`
 
 ## ToDoList
 
@@ -39,4 +39,4 @@ Finaly run `ledmoist.py`
 - [ ] Write lamp highering logic
 - [ ] Make Webapp/site that auto updates with sensordata
 - [ ] Add Jupyter notebook for EDA if interesting
-- [ ] Should really change ledmoist.py filename
+- [x] Should really change ledmoist.py filename
