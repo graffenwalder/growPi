@@ -13,7 +13,13 @@ moistSensor = 0
 lightSensor = 1
 ledRed = 3
 tempSensor = 4
-waterPump = 5
+#waterPump = 5
+distSensor = 6
+
+#Heights
+potHeight = 12
+sensorHeight = 73
+
 
 displayInterval = 1 * 60 #How long should the display stay on?
 checkInterval = 10 * 60# seconds between loop
@@ -30,6 +36,9 @@ def displayText():
     time.sleep(displayInterval)
     setText("") 
     setRGB(0,0,0)
+    
+def calcPlantHeight():
+    return sensorHeight - potHeight - distValue 
 
 def measurePi():
         temp = os.popen("vcgencmd measure_temp").readline()
@@ -37,7 +46,7 @@ def measurePi():
     
 # Write data to csv
 def appendCSV():
-    fields=['Time','Temperature','Humidity', 'MoistValue', 'MoistClass', 'LightValue', 'Lights', 'PiTemperature']
+    fields=['Time','Temperature','Humidity', 'MoistValue', 'MoistClass', 'LightValue', 'Lights', 'PiTemperature', 'Height']
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writerow({'Time': currentTime,
@@ -47,7 +56,8 @@ def appendCSV():
                          'MoistClass': moistResult,
                          'LightValue': lightValue,
                          'Lights': lightsOn,
-                         'PiTemperature': (measurePi())
+                         'PiTemperature': (measurePi()),
+                         'Height': (calcPlantHeight())
                          })
 
 def waterPlants():
@@ -63,6 +73,7 @@ lightsOn = True
 while True:
     try:
         lightValue = analogRead(lightSensor)
+        distValue = ultrasonicRead(distSensor)
         
         if lightValue <= lightThreshold:
             lightsOn = False
@@ -105,6 +116,7 @@ while True:
             print("Lights: {} (On)".format(lightValue))
         else:
             print("Lights: {} (Off)".format(lightValue))
+        print("Height: " + str(calcPlantHeight()) + " cm")
         print("Raspberry pi: " + measurePi() + "'C\n")
         
         
