@@ -28,8 +28,6 @@ $ sudo i2cdetect -y 1
 - If the install was succesfull, you should see "04" in the output.
 - See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) if unsuccesfull.
 6. Connect sensors to the GrovePi and run:
-8
-Data is saved to temp.csv.
 ```
 $ python growpi.py
 ```
