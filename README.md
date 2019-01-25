@@ -1,19 +1,38 @@
 # growPi
 
-Raspberry pi, with GrovePi+. Currently has Moisture, Temperature, Humidity and LightSensor.
-Data is saved to temp.csv.
+Raspberry pi, with GrovePi+ to read plant data. Data is saved to `temp.csv`.
+
+Current sensors attached: moisture, light, temperature, humidity and distance.
 
 ![growPi](/images/plantsense.jpg)  
 
 ## Setup
 
-Attach GrovePi+ to Raspberry pi
-In CLI:
+1. Download and burn [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) to SD card.
+2. Do initial Raspbian setup, make sure to setup an internet connection.
+3. Update Raspbian:
 ```
-sudo curl -kL dexterindustries.com/update_grovepi | bash
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
 ```
-After reboot for changes to take effect.
-See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) for more.
+4. Attach GrovePi+ To Raspberry Pi and run:
+```
+$ sudo curl -kL dexterindustries.com/update_grovepi | bash
+$ sudo reboot
+```
+5. After reboot run: 
+```
+$ sudo i2cdetect -y 1
+```
+- If the install was succesfull, you should see "04" in the output.
+- See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) if unsuccesfull.
+6. Connect sensors to the GrovePi and run:
+8
+Data is saved to temp.csv.
+```
+$ python growpi.py
+```
 
 ## Hardware
 
@@ -22,12 +41,12 @@ See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-th
   - Adapter
   - 8GB SD Card
 - GrovePi+
-  - Moisture Sensor
-  - Light Sensor
-  - LED Red (5mm)
-  - Temperature & Humidity Sensor (DHT11)
-  - Ultrasonic Ranger
-  - LCD RGB Backlight
+  - [Moisture Sensor](http://wiki.seeedstudio.com/Grove-Moisture_Sensor/)
+  - [Light Sensor](http://wiki.seeedstudio.com/Grove-Light_Sensor/)
+  - [LED Red (5mm)](http://wiki.seeedstudio.com/Grove-Red_LED/)
+  - [Temperature & Humidity Sensor (DHT11)](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
+  - [Ultrasonic Ranger](http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
+  - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
 - Optional:
   - Heatsink for Raspberry Pi
 
@@ -41,8 +60,6 @@ See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-th
 
 Feel free to use different connections, just be sure to change them in `growpi.py`.
 
-Finaly run `python growpi.py`
-
 ## ToDoList
 
 - [x] Base script
@@ -52,8 +69,8 @@ Finaly run `python growpi.py`
 - [x] Save sensordata to csv file
 - [ ] Add waterpump
 - [ ] Write watering logic
-- [ ] Get stable sensor data from ultrasonic reader
+- [ ] Get stable sensor data from Ultrasonic Ranger
 - [ ] Write lamp highering logic
 - [ ] Make Webapp/site that auto updates with sensordata
-- [ ] Add Jupyter notebook for EDA if interesting
+- [ ] Add Jupyter notebook with EDA if interesting
 - [x] Should really change ledmoist.py filename
