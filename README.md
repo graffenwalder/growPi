@@ -48,15 +48,18 @@ $ python growpi.py
 - Optional:
   - Heatsink for Raspberry Pi
 
-#### Connections:
-- Moisture Sensor to A0
-- Light Sensor to A1
-- LED Red to D3
-- Temperature & Humidity Sensor to D4
-- Ultrasonic Ranger to D6
-- LCD RGB Backlight to IC2
+#### Port setup:
 
-Feel free to use different connections, just be sure to change them in `growpi.py`.
+| Module/Sensor                  | Port  | 
+| -------------------------------|-------|
+| Moisture Sensor                | A0    |
+| Light Sensor                   | A1    |
+| LED Red                        | D3    |
+| Temperature & Humidity Sensor  | D4    |
+| Ultrasonic Ranger              | D6    |
+| LCD RGB Backlight              | IC2   |
+
+Feel free to use different ports, just be sure to change them in `growpi.py`.
 
 ## ToDoList
 
