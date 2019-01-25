@@ -15,9 +15,9 @@ sudo curl -kL dexterindustries.com/update_grovepi | bash
 After reboot for changes to take effect.
 See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) for more.
 
-___
+## Hardware
 
-### Components:
+#### Components:
 - Raspberry Pi 3B+
   - Adapter
   - 8GB SD Card
@@ -31,7 +31,7 @@ ___
 - Optional:
   - Heatsink for Raspberry Pi
 
-### Connections:
+#### Connections:
 - Moisture Sensor to A0
 - Light Sensor to A1
 - Red led to D3
