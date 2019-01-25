@@ -20,7 +20,6 @@ distSensor = 6
 potHeight = 12
 sensorHeight = 73
 
-
 displayInterval = 1 * 60 #How long should the display stay on?
 checkInterval = 10 * 60# How long before loop starts again?
 lightThreshold = 10 # value at wich Light begins
@@ -64,6 +63,9 @@ def printStatements():
     print(currentTime)
     if math.isnan(temp) == False and math.isnan(humidity) == False:
         print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(temp, humidity))
+    else:
+        print("Couldn't get temperature/humidity sensor readings")
+        
     print('Moisture value: {0} ({1})'.format(moist, moistResult))
     
     if lightsOn:
