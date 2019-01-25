@@ -43,6 +43,7 @@ $ sudo i2cdetect -y 1
 - If the install was succesfull, you should see "04" in the output.
 - See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) if unsuccesfull.
 6. Connect sensors to the GrovePi ports:
+
 | Module/Sensor                  | Port  | 
 | -------------------------------|-------|
 | Moisture Sensor                | A0    |
@@ -51,8 +52,10 @@ $ sudo i2cdetect -y 1
 | Temperature & Humidity Sensor  | D4    |
 | Ultrasonic Ranger              | D6    |
 | LCD RGB Backlight              | IC2   |
+
 Feel free to use different ports, just be sure to change them in `growpi.py`.
-7. Launch growPi: `$ python growpi.py`
+7. Launch growPi:
+```$ python growpi.py```
 
 ## ToDoList
 
