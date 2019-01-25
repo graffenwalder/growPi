@@ -15,13 +15,29 @@ sudo curl -kL dexterindustries.com/update_grovepi | bash
 After reboot for changes to take effect.
 See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) for more.
 
+___
+
+### Components:
+- Raspberry Pi 3B+
+  - Adapter
+  - 8GB SD Card
+- GrovePi+
+  - Moisture Sensor
+  - Light Sensot
+  - LED Red (5mm)
+  - Temperature & Humidity Sensor (DHT11)
+  - Ultrasonic Ranger
+  - LCD RGB Backlight
+- Optional:
+  - Heatsink for Raspberry Pi
+
 ### Connections:
 - Moisture Sensor to A0
 - Light Sensor to A1
 - Red led to D3
 - Temperature/Humidity Sensor to D4
-- Waterpump to D5
 - UltraSonicRanger to D6
+- LCD RGB Backlight to IC2
 
 Feel free to use different connections, just be sure to change them in `growpi.py`.
 Finaly run `growpi.py`
