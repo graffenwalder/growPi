@@ -4,7 +4,22 @@ Raspberry pi, with GrovePi+ to read plant data. Data is saved to `temp.csv`.
 
 Current sensors attached: moisture, light, temperature, humidity and distance.
 
-![growPi](/images/plantsense.jpg)  
+![growPi](/images/plantsense.jpg)
+
+## Hardware
+
+- Raspberry Pi 3B+
+  - Adapter
+  - 8GB SD Card
+- GrovePi+
+  - [Moisture Sensor](http://wiki.seeedstudio.com/Grove-Moisture_Sensor/)
+  - [Light Sensor](http://wiki.seeedstudio.com/Grove-Light_Sensor/)
+  - [LED Red (5mm)](http://wiki.seeedstudio.com/Grove-Red_LED/)
+  - [Temperature & Humidity Sensor (DHT11)](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
+  - [Ultrasonic Ranger](http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
+  - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
+- Optional:
+  - Heatsink for Raspberry Pi
 
 ## Setup
 
@@ -27,29 +42,7 @@ $ sudo i2cdetect -y 1
 ```
 - If the install was succesfull, you should see "04" in the output.
 - See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) if unsuccesfull.
-6. Connect sensors to the GrovePi and run:
-```
-$ python growpi.py
-```
-
-## Hardware
-
-#### Components:
-- Raspberry Pi 3B+
-  - Adapter
-  - 8GB SD Card
-- GrovePi+
-  - [Moisture Sensor](http://wiki.seeedstudio.com/Grove-Moisture_Sensor/)
-  - [Light Sensor](http://wiki.seeedstudio.com/Grove-Light_Sensor/)
-  - [LED Red (5mm)](http://wiki.seeedstudio.com/Grove-Red_LED/)
-  - [Temperature & Humidity Sensor (DHT11)](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
-  - [Ultrasonic Ranger](http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
-  - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
-- Optional:
-  - Heatsink for Raspberry Pi
-
-#### Port setup:
-
+6. Connect sensors to the GrovePi ports:
 | Module/Sensor                  | Port  | 
 | -------------------------------|-------|
 | Moisture Sensor                | A0    |
@@ -58,8 +51,8 @@ $ python growpi.py
 | Temperature & Humidity Sensor  | D4    |
 | Ultrasonic Ranger              | D6    |
 | LCD RGB Backlight              | IC2   |
-
 Feel free to use different ports, just be sure to change them in `growpi.py`.
+7. Launch growPi: `$ python growpi.py`
 
 ## ToDoList
 
