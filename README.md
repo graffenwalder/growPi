@@ -54,8 +54,11 @@ $ sudo i2cdetect -y 1
 | LCD RGB Backlight              | IC2   |
 
 Feel free to use different ports, just be sure to change them in `growpi.py`.
+
 7. Launch growPi:
-```$ python growpi.py```
+```
+$ python growpi.py
+```
 
 ## ToDoList
 
