@@ -59,6 +59,20 @@ def appendCSV():
                          'PiTemperature': (measurePi()),
                          'Height': (calcPlantHeight())
                          })
+        
+def printStatements():
+    print(currentTime)
+    if math.isnan(temp) == False and math.isnan(humidity) == False:
+        print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(temp, humidity))
+    print('Moisture value: {0} ({1})'.format(moist, moistResult))
+    
+    if lightsOn:
+        print("Lights: {} (On)".format(lightValue))
+    else:
+        print("Lights: {} (Off)".format(lightValue))
+        
+    print("Height: {} cm".format(calcPlantHeight()))
+    print("Raspberry pi: {}'C\n".format(measurePi()))
 
 def waterPlants():
     digitalwrite(waterPump,1)
@@ -97,19 +111,8 @@ while True:
             moistResult = 'Wet'
             digitalWrite(ledRed,1)
             #digitalwrite(waterPump,0)
-        
-#       printStatements
-        print(currentTime)
-        if math.isnan(temp) == False and math.isnan(humidity) == False:
-            print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(temp, humidity))
-        print('Moisture value: {0} ({1})'.format(moist, moistResult))
-        if lightsOn:
-            print("Lights: {} (On)".format(lightValue))
-        else:
-            print("Lights: {} (Off)".format(lightValue))
-        print("Height: {} cm".format(calcPlantHeight()))
-        print("Raspberry pi: {}'C\n".format(measurePi()))
-        
+            
+        printStatements()
         appendCSV()
         
         # Not use display when it's dark
