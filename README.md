@@ -23,7 +23,7 @@ See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-th
   - 8GB SD Card
 - GrovePi+
   - Moisture Sensor
-  - Light Sensot
+  - Light Sensor
   - LED Red (5mm)
   - Temperature & Humidity Sensor (DHT11)
   - Ultrasonic Ranger
@@ -34,13 +34,14 @@ See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-th
 #### Connections:
 - Moisture Sensor to A0
 - Light Sensor to A1
-- Red led to D3
-- Temperature/Humidity Sensor to D4
-- UltraSonicRanger to D6
+- LED Red to D3
+- Temperature & Humidity Sensor to D4
+- Ultrasonic Ranger to D6
 - LCD RGB Backlight to IC2
 
 Feel free to use different connections, just be sure to change them in `growpi.py`.
-Finaly run `growpi.py`
+
+Finaly run `python growpi.py`
 
 ## ToDoList
 
