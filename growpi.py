@@ -111,7 +111,7 @@ while True:
             #digitalwrite(waterPump,0)
         else:
             moistResult = 'Wet'
-            digitalWrite(ledRed,1)
+            digitalWrite(ledRed,0)
             #digitalwrite(waterPump,0)
             
         printStatements()
