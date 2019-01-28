@@ -21,15 +21,17 @@ potHeight = 12
 sensorHeight = 73
 
 displayInterval = 1 * 60 #How long should the display stay on?
-checkInterval = 10 * 60# How long before loop starts again?
+checkInterval = 10 * 60 # How long before loop starts again?
 lightThreshold = 10 # value at wich Light begins
 
 mlSecond = 20 # How much mililiter the waterpump produces per second
 waterAmount = 500 # How much mililiter water should be given to the plants
 
+
 def displayText():
     setRGB(0,128,64) # background color led display
     text = str(temp) + "C " + str(humidity) + "% " + str(measurePi() + "\n" + str(moist) + " " + moistResult + " " + str(lightValue) + " on")
+    
     setText(text)
     
     time.sleep(displayInterval)
@@ -45,7 +47,9 @@ def measurePi():
     
 # Write data to csv
 def appendCSV():
-    fields=['Time','Temperature','Humidity', 'MoistValue', 'MoistClass', 'LightValue', 'Lights', 'PiTemperature', 'Height']
+    fields=['Time','Temperature','Humidity', 'MoistValue', 'MoistClass',
+            'LightValue', 'Lights', 'PiTemperature', 'Height']
+    
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writerow({'Time': currentTime,
@@ -102,17 +106,12 @@ while True:
         if 0 <= moist and moist < 300:
             moistResult = 'Dry'
             digitalWrite(ledRed,1)
-            #print("Dry ground, watering plants...")
-            #waterPlants()
-            
         elif 300 <= moist and moist < 600:
             moistResult = 'Moist'
             digitalWrite(ledRed,0)
-            #digitalwrite(waterPump,0)
         else:
             moistResult = 'Wet'
             digitalWrite(ledRed,0)
-            #digitalwrite(waterPump,0)
             
         printStatements()
         appendCSV()
@@ -127,7 +126,6 @@ while True:
 
     except KeyboardInterrupt:
         digitalWrite(ledRed,0)
-        #digitalWrite(waterPump,0)
         setText("")
         setRGB(0,0,0)
         print("Leds and RGB shutdown safely")
