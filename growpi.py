@@ -48,7 +48,7 @@ def measurePi():
 # Write data to csv
 def appendCSV():
     fields=['Time','Temperature','Humidity', 'MoistValue', 'MoistClass',
-            'LightValue', 'Lights', 'PiTemperature', 'Height']
+            'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance']
     
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -60,7 +60,8 @@ def appendCSV():
                          'LightValue': lightValue,
                          'Lights': lightsOn,
                          'PiTemperature': (measurePi()),
-                         'Height': (calcPlantHeight())
+                         'Height': (calcPlantHeight()),
+                         'SonicDistance' : distValue
                          })
         
 def printStatements():
