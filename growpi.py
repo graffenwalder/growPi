@@ -104,15 +104,16 @@ while True:
         moist = analogRead(moistSensor)
         [temp, humidity] = dht(tempSensor, 0)
         currentTime = time.ctime()
-        lightsOn = lightValue > lightThreshold
-
-        if 0 <= moist and moist < 300:
+        
+        if moist < 300:
             moistResult = 'Dry'
-        elif 300 <= moist and moist < 600:
+        elif moist < 600:
             moistResult = 'Moist'
         else:
             moistResult = 'Wet'
-
+        
+        lightsOn = lightValue > lightThreshold
+        
         # Lights on
         if lightsOn:
             printStatements()
