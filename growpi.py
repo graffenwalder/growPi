@@ -78,12 +78,7 @@ def printStatements():
         print("Couldn't get temperature/humidity sensor readings")
 
     print('Moisture value: {0} ({1})'.format(moist, moistResult))
-
-    if lightsOn:
-        print("Lights: {} (On)".format(lightValue))
-    else:
-        print("Lights: {} (Off)".format(lightValue))
-
+    print("Lights: {} ({})".format(lightValue, "On" if lightsOn else "Off"))
     print("Height: {} cm".format(calcPlantHeight()))
     print("Raspberry pi: {}'C\n".format(measurePi()))
 
@@ -120,10 +115,7 @@ while True:
             appendCSV()
 
             # Turn on red LED when ground is dry, but only when lights are on
-            if moistResult == 'Dry':
-                digitalWrite(ledRed, 1)
-            else:
-                digitalWrite(ledRed, 0)
+            digitalWrite(ledRed, 1) if moistResult == 'Dry' else digitalWrite(ledRed, 0)
 
             displayText()
             # Time to next check minus display time
@@ -134,7 +126,7 @@ while True:
             printStatements()
             appendCSV()
 
-            # In case ground was dry, when lights where still on
+            # In case ground was dry, when lights were still on
             digitalWrite(ledRed, 0)
 
             time.sleep(checkInterval)
