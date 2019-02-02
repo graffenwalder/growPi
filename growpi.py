@@ -40,7 +40,7 @@ def appendCSV():
                          'Temperature': temp,
                          'Humidity': humidity,
                          'MoistValue': moist,
-                         'MoistClass': moistResult,
+                         'MoistClass': moistClass,
                          'LightValue': lightValue,
                          'Lights': lightsOn,
                          'PiTemperature': (measurePi()),
@@ -56,8 +56,7 @@ def calcPlantHeight():
 def displayText():
     setRGB(0, 128, 64)  # background color led display
     text = str(temp) + "C " + str(humidity) + "% " + str(measurePi() +
-                                                         "\n" + str(moist) + " " + moistResult + " " + str(lightValue) + " on")
-
+                                                         "\n" + str(moist) + " " + moistClass + " " + str(lightValue) + " on")
     setText(text)
     time.sleep(displayInterval)
     setText("")
@@ -69,15 +68,24 @@ def measurePi():
     return (temp.replace("temp=", "")[0:4])
 
 
-def printStatements():
+def moistClassifier():
+    if moist < 300:
+        moistResult = 'Dry'
+    elif moist < 600:
+        moistResult = 'Moist'
+    else:
+        moistResult = 'Wet'      
+    return moistResult
+
+
+def printSensorData():
     print(currentTime)
     if math.isnan(temp) == False and math.isnan(humidity) == False:
-        print("Temperature: {0:.02f}'C\nHumidity: {1:.02f}%".format(
-            temp, humidity))
+        print("Temperature: {}'C\nHumidity: {}%".format(temp, humidity))
     else:
         print("Couldn't get temperature/humidity sensor readings")
 
-    print('Moisture value: {0} ({1})'.format(moist, moistResult))
+    print('Moisture value: {0} ({1})'.format(moist, moistClass))
     print("Lights: {} ({})".format(lightValue, "On" if lightsOn else "Off"))
     print("Height: {} cm".format(calcPlantHeight()))
     print("Raspberry pi: {}'C\n".format(measurePi()))
@@ -100,20 +108,14 @@ while True:
         [temp, humidity] = dht(tempSensor, 0)
         currentTime = time.ctime()
         
-        if moist < 300:
-            moistResult = 'Dry'
-        elif moist < 600:
-            moistResult = 'Moist'
-        else:
-            moistResult = 'Wet'
-        
+        moistClass = moistClassifier()
         lightsOn = lightValue > lightThreshold
+        
+        printSensorData()
+        appendCSV()
         
         # Lights on
         if lightsOn:
-            printStatements()
-            appendCSV()
-
             # Turn on red LED when ground is dry, but only when lights are on
             digitalWrite(ledRed, 1) if moistResult == 'Dry' else digitalWrite(ledRed, 0)
 
@@ -123,9 +125,6 @@ while True:
 
         # Lights off
         else:
-            printStatements()
-            appendCSV()
-
             # In case ground was dry, when lights were still on
             digitalWrite(ledRed, 0)
 
@@ -139,4 +138,6 @@ while True:
         break
     except IOError:
         print("Error")
+
+
 
