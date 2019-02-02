@@ -95,8 +95,6 @@ def waterPlants():
 
 
 # Main Loop
-lightsOn = True
-
 while True:
     try:
         # Get Sensor readings
