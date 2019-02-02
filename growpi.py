@@ -9,6 +9,7 @@ from grove_rgb_lcd import *
 # Connect the Grove Moisture Sensor to analog port A0, Light Sensor to A1, Display to IC2
 # Connect Red Led to D3, Temp Sensor to D4, UltrasonicRanger to D6
 
+# Sensors
 moistSensor = 0
 lightSensor = 1
 ledRed = 3
@@ -22,31 +23,11 @@ sensorHeight = 73
 
 displayInterval = 1 * 60  # How long should the display stay on?
 checkInterval = 10 * 60  # How long before loop starts again?
-lightThreshold = 10  # value at wich Light begins
+lightThreshold = 10  # Value from where lightOn = True begins
 
-mlSecond = 20  # How much mililiter the waterpump produces per second
-waterAmount = 500  # How much mililiter water should be given to the plants
+mlSecond = 20  # How much ml water the waterpump produces per second
+waterAmount = 500  # How much ml water should be given to the plants
 
-
-def displayText():
-    setRGB(0, 128, 64)  # background color led display
-    text = str(temp) + "C " + str(humidity) + "% " + str(measurePi() +
-                                                         "\n" + str(moist) + " " + moistResult + " " + str(lightValue) + " on")
-
-    setText(text)
-
-    time.sleep(displayInterval)
-    setText("")
-    setRGB(0, 0, 0)
-
-
-def calcPlantHeight():
-    return sensorHeight - potHeight - distValue
-
-
-def measurePi():
-    temp = os.popen("vcgencmd measure_temp").readline()
-    return (temp.replace("temp=", "")[0:4])
 
 # Write data to csv
 def appendCSV():
@@ -66,6 +47,26 @@ def appendCSV():
                          'Height': (calcPlantHeight()),
                          'SonicDistance': distValue
                          })
+
+
+def calcPlantHeight():
+    return sensorHeight - potHeight - distValue
+
+
+def displayText():
+    setRGB(0, 128, 64)  # background color led display
+    text = str(temp) + "C " + str(humidity) + "% " + str(measurePi() +
+                                                         "\n" + str(moist) + " " + moistResult + " " + str(lightValue) + " on")
+
+    setText(text)
+    time.sleep(displayInterval)
+    setText("")
+    setRGB(0, 0, 0)
+
+
+def measurePi():
+    temp = os.popen("vcgencmd measure_temp").readline()
+    return (temp.replace("temp=", "")[0:4])
 
 
 def printStatements():
@@ -97,7 +98,7 @@ def waterPlants():
 # Main Loop
 while True:
     try:
-        # Get Sensor readings
+        # Get sensor readings
         lightValue = analogRead(lightSensor)
         distValue = ultrasonicRead(distSensor)
         moist = analogRead(moistSensor)
