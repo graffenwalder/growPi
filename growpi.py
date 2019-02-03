@@ -101,7 +101,7 @@ def waterPlants():
 # Main Loop
 while True:
     try:
-        #Time Loop
+        # Time loop
         t0 = time.time()
         
         # Get sensor readings
@@ -120,7 +120,7 @@ while True:
         # Lights on
         if lightsOn:
             # Turn on red LED when ground is dry, but only when lights are on
-            digitalWrite(ledRed, 1) if moistResult == 'Dry' else digitalWrite(ledRed, 0)
+            digitalWrite(ledRed, 1) if moistClass == 'Dry' else digitalWrite(ledRed, 0)
 
             displayText()
 
