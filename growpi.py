@@ -101,13 +101,16 @@ def waterPlants():
 # Main Loop
 while True:
     try:
+        #Time Loop
+        t0 = time.time()
+        
         # Get sensor readings
         lightValue = analogRead(lightSensor)
         distValue = ultrasonicRead(distSensor)
         moist = analogRead(moistSensor)
         [temp, humidity] = dht(tempSensor, 0)
-        currentTime = time.ctime()
         
+        currentTime = time.ctime()
         moistClass = moistClassifier()
         lightsOn = lightValue > lightThreshold
         
@@ -120,15 +123,14 @@ while True:
             digitalWrite(ledRed, 1) if moistResult == 'Dry' else digitalWrite(ledRed, 0)
 
             displayText()
-            # Time to next check minus display time
-            time.sleep(checkInterval - displayInterval)
 
         # Lights off
         else:
             # In case ground was dry, when lights were still on
             digitalWrite(ledRed, 0)
-
-            time.sleep(checkInterval)
+        
+        loopTime = time.time() - t0
+        time.sleep(checkInterval - loopTime)
 
     except KeyboardInterrupt:
         digitalWrite(ledRed, 0)
