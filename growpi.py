@@ -94,7 +94,7 @@ def printSensorData():
     if lightsOn:
         print("Image path: {}\n".format(imagePath))
     else:
-        print("\n")
+        print("")
 
 
 def takePicture():
