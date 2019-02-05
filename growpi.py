@@ -47,7 +47,7 @@ def appendCSV():
                          'PiTemperature': (measurePi()),
                          'Height': (calcPlantHeight()),
                          'SonicDistance': distValue,
-                         'ImagePath': filePath
+                         'ImagePath': imagePath
                          })
 
 
@@ -92,7 +92,7 @@ def printSensorData():
     print("Height: {} cm".format(calcPlantHeight()))
     print("Raspberry pi: {}'C".format(measurePi()))
     if lightsOn:
-        print("Image saved to: {}\n".format(filePath))
+        print("Image path: {}\n".format(imagePath))
     else:
         print("\n")
 
@@ -102,7 +102,7 @@ def takePicture():
         camera.start_preview()
         camera.awb_mode = 'sunlight'
         time.sleep(5)
-        camera.capture(filePath)
+        camera.capture(imagePath)
         camera.stop_preview()
     
 
@@ -129,25 +129,31 @@ while True:
         moistClass = moistClassifier()
         lightsOn = lightValue > lightThreshold
         
-        # For picture
-        timestamp = time.strftime("%Y-%m-%d--%H-%M")
-        filePath = '/home/pi/Desktop/images/{}.jpg'.format(timestamp) if lightsOn else ''
-        
-        printSensorData()
-        appendCSV()
-        
         # Lights on
         if lightsOn:
-            # Turn on red LED when ground is dry, but only when lights are on
+            # Turn on red LED when ground is dry, when lightsOn
             digitalWrite(ledRed, 1) if moistClass == 'Dry' else digitalWrite(ledRed, 0)
             
+            # Take picture every loop, while lightsOn
+            timestamp = time.strftime("%Y-%m-%d--%H-%M")
+            imagePath = '/home/pi/Desktop/images/{}.jpg'.format(timestamp)
             takePicture()
+            
+            # PrintSensorData and appendCSV, before displayText
+            printSensorData()
+            appendCSV()
+            
+            # Textdisplay when lightsOn
             displayText()
 
         # Lights off
         else:
-            # In case ground was dry, when lights were still on
+            # In case ground was dry, when lightsOn
             digitalWrite(ledRed, 0)
+            imagePath = ''
+            
+            printSensorData()
+            appendCSV()
         
         loopTime = time.time() - t0
         time.sleep(checkInterval - loopTime)
@@ -160,6 +166,3 @@ while True:
         break
     except IOError:
         print("Error")
-
-
-
