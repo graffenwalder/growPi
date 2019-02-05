@@ -85,7 +85,7 @@ def printSensorData():
     else:
         print("Couldn't get temperature/humidity sensor readings")
 
-    print('Moisture value: {0} ({1})'.format(moist, moistClass))
+    print('Moisture: {0} ({1})'.format(moist, moistClass))
     print("Lights: {} ({})".format(lightValue, "On" if lightsOn else "Off"))
     print("Height: {} cm".format(calcPlantHeight()))
     print("Raspberry pi: {}'C\n".format(measurePi()))
