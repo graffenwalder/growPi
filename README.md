@@ -10,7 +10,7 @@ Current sensors attached: moisture, light, temperature, humidity and distance.
 
 - Raspberry Pi 3B+
   - Adapter
-  - 8GB SD Card
+  - 32GB SD Card (8GB is enough when not using camera)
 - GrovePi+
   - [Moisture Sensor](http://wiki.seeedstudio.com/Grove-Moisture_Sensor/)
   - [Light Sensor](http://wiki.seeedstudio.com/Grove-Light_Sensor/)
@@ -20,6 +20,7 @@ Current sensors attached: moisture, light, temperature, humidity and distance.
   - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
 - Optional:
   - Heatsink for Raspberry Pi
+  - Raspberry Pi Camera (Board V2 - 8MP)
 
 ## Setup
 
@@ -67,6 +68,7 @@ $ python growpi.py
 - [x] Add red led as indicator for low moisture
 - [x] Add display, that displays current data
 - [x] Save sensordata to csv file
+- [x] Add camera
 - [ ] Add waterpump
 - [ ] Write watering logic
 - [ ] Get stable sensor data from Ultrasonic Ranger

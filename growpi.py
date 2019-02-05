@@ -1,7 +1,8 @@
-import time
+import csv
 import math
 import os
-import csv
+import picamera
+import time
 
 from grovepi import *
 from grove_rgb_lcd import *
@@ -32,7 +33,7 @@ waterAmount = 500  # How much ml water should be given to the plants
 # Write data to csv
 def appendCSV():
     fields = ['Time', 'Temperature', 'Humidity', 'MoistValue', 'MoistClass',
-              'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance']
+              'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance', 'ImagePath']
 
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -45,7 +46,8 @@ def appendCSV():
                          'Lights': lightsOn,
                          'PiTemperature': (measurePi()),
                          'Height': (calcPlantHeight()),
-                         'SonicDistance': distValue
+                         'SonicDistance': distValue,
+                         'ImagePath': filePath
                          })
 
 
@@ -88,8 +90,21 @@ def printSensorData():
     print('Moisture: {0} ({1})'.format(moist, moistClass))
     print("Lights: {} ({})".format(lightValue, "On" if lightsOn else "Off"))
     print("Height: {} cm".format(calcPlantHeight()))
-    print("Raspberry pi: {}'C\n".format(measurePi()))
+    print("Raspberry pi: {}'C".format(measurePi()))
+    if lightsOn:
+        print("Image saved to: {}\n".format(filePath))
+    else:
+        print("\n")
 
+
+def takePicture():
+    with picamera.PiCamera() as camera:
+        camera.start_preview()
+        camera.awb_mode = 'sunlight'
+        time.sleep(5)
+        camera.capture(filePath)
+        camera.stop_preview()
+    
 
 def waterPlants():
     digitalwrite(waterPump, 1)
@@ -114,6 +129,10 @@ while True:
         moistClass = moistClassifier()
         lightsOn = lightValue > lightThreshold
         
+        # For picture
+        timestamp = time.strftime("%Y-%m-%d--%H-%M")
+        filePath = '/home/pi/Desktop/images/{}.jpg'.format(timestamp) if lightsOn else ''
+        
         printSensorData()
         appendCSV()
         
@@ -121,7 +140,8 @@ while True:
         if lightsOn:
             # Turn on red LED when ground is dry, but only when lights are on
             digitalWrite(ledRed, 1) if moistClass == 'Dry' else digitalWrite(ledRed, 0)
-
+            
+            takePicture()
             displayText()
 
         # Lights off

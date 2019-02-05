@@ -1,4 +1,4 @@
-Time,Temperature,Humidity,MoistValue,MoistClass,LightValue,Lights,PiTemperature,Height,SonicDistance
+Time,Temperature,Humidity,MoistValue,MoistClass,LightValue,Lights,PiTemperature,Height,SonicDistance, ImagePath
 Wed Jan 23 14:40:03 2019,18.0,50.0,573,Moist,306,True,36.5,,
 Wed Jan 23 14:50:04 2019,18.0,51.0,574,Moist,281,True,40.2,,
 Wed Jan 23 15:00:04 2019,19.0,50.0,571,Moist,307,True,39.7,,
@@ -1821,3 +1821,18 @@ Tue Feb  5 11:50:12 2019,18.0,53.0,739,Wet,759,True,39.7,10,51
 Tue Feb  5 12:00:12 2019,16.0,63.0,737,Wet,759,True,39.2,10,51
 Tue Feb  5 12:10:12 2019,15.0,66.0,735,Wet,758,True,38.6,7,54
 Tue Feb  5 12:20:12 2019,14.0,70.0,720,Wet,755,True,37.6,7,54
+Tue Feb  5 12:30:13 2019,14.0,63.0,717,Wet,758,True,36.5,8,53
+Tue Feb  5 12:40:13 2019,13.0,67.0,711,Wet,758,True,38.1,7,54
+Tue Feb  5 12:50:13 2019,13.0,70.0,710,Wet,759,True,38.1,10,51
+Tue Feb  5 13:00:13 2019,14.0,68.0,708,Wet,758,True,37.6,7,54
+Tue Feb  5 13:10:13 2019,14.0,68.0,707,Wet,761,True,38.6,10,51
+Tue Feb  5 13:20:13 2019,13.0,68.0,707,Wet,767,True,40.2,10,51
+Tue Feb  5 13:30:13 2019,16.0,63.0,707,Wet,765,True,41.3,11,50
+Tue Feb  5 13:40:13 2019,23.0,41.0,708,Wet,764,True,41.9,6,55
+Tue Feb  5 13:50:13 2019,23.0,40.0,707,Wet,762,True,41.3,10,51
+Tue Feb  5 14:00:06 2019,0.0,0.0,713,Wet,757,True,37.0,8,53
+Tue Feb  5 14:10:06 2019,18.0,55.0,710,Wet,759,True,39.7,8,53
+Tue Feb  5 14:20:06 2019,17.0,58.0,707,Wet,759,True,41.9,8,53
+Tue Feb  5 14:30:02 2019,15.0,62.0,706,Wet,755,True,41.9,8,53,/home/pi/Desktop/images/2019-02-05--14-30.jpg
+Tue Feb  5 14:40:02 2019,14.0,67.0,706,Wet,756,True,39.7,8,53,/home/pi/Desktop/images/2019-02-05--14-40.jpg
+Tue Feb  5 14:50:31 2019,14.0,67.0,705,Wet,754,True,39.7,8,53,/home/pi/Desktop/images/2019-02-05--14-50.jpg

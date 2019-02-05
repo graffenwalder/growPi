@@ -1,7 +1,8 @@
 2019-01-24 13:31:03 - Added UltraSonicRanger (height)
 2019-01-26 11:10:20 - Added 100ml Water
 2019-02-02 10:00:04 - Added 50ml Water
-2019-02-03 08:00:10 - Script crashed due faulty code refactoring
+2019-02-03 08:00:10 - Script crashed due to code refactoring
 2019-02-03 14:20:10 - First reading since crash
 2019-02-04 11:20:18 - Added 50ml Water
-2019-02-04 11:40:11 - Added 100ml Water
+2019-02-05 11:40:11 - Added 100ml Water
+2019-02-05 12:20:12 - Migrated to bigger SD card
