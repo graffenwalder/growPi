@@ -11,12 +11,12 @@ from grove_rgb_lcd import *
 # Connect Red Led to D3, Temp Sensor to D4, UltrasonicRanger to D6
 
 # Sensors
-moistSensor = 0
+moistureSensor = 0
 lightSensor = 1
 ledRed = 3
 tempSensor = 4
 #waterPump = 5
-distSensor = 6
+distanceSensor = 6
 
 # Heights
 potHeight = 12
@@ -24,7 +24,7 @@ sensorHeight = 73
 
 displayInterval = 1 * 60  # How long should the display stay on?
 checkInterval = 10 * 60  # How long before loop starts again?
-lightThreshold = 10  # Value from where lightOn = True begins
+lightThreshold = 10  # Value above threshold is lightsOn
 
 mlSecond = 20  # How much ml water the waterpump produces per second
 waterAmount = 500  # How much ml water should be given to the plants
@@ -32,7 +32,7 @@ waterAmount = 500  # How much ml water should be given to the plants
 
 # Write data to csv
 def appendCSV():
-    fields = ['Time', 'Temperature', 'Humidity', 'MoistValue', 'MoistClass',
+    fields = ['Time', 'Temperature', 'Humidity', 'Moisture', 'MoistureClass',
               'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance', 'ImagePath']
 
     with open(r'temp.csv', 'a') as f:
@@ -40,44 +40,44 @@ def appendCSV():
         writer.writerow({'Time': currentTime,
                          'Temperature': temp,
                          'Humidity': humidity,
-                         'MoistValue': moist,
-                         'MoistClass': moistClass,
+                         'Moisture': moisture,
+                         'MoistureClass': moistureClass,
                          'LightValue': lightValue,
                          'Lights': lightsOn,
-                         'PiTemperature': (measurePi()),
+                         'PiTemperature': (piTemperature()),
                          'Height': (calcPlantHeight()),
-                         'SonicDistance': distValue,
-                         'ImagePath': imagePath
+                         'SonicDistance': ultraSonicDistance,
+                         'ImagePath': image
                          })
 
 
 def calcPlantHeight():
-    return sensorHeight - potHeight - distValue
+    return sensorHeight - potHeight - ultraSonicDistance
 
 
 def displayText():
     setRGB(0, 128, 64)  # background color led display
-    text = str(temp) + "C " + str(humidity) + "% " + str(measurePi() +
-                                                         "\n" + str(moist) + " " + moistClass + " " + str(lightValue) + " on")
+    text = str(temp) + "C " + str(humidity) + "% " + str(piTemperature() +
+                                                         "\n" + str(moisture) + " " + moistureClass + " " + str(lightValue) + " on")
     setText(text)
     time.sleep(displayInterval)
     setText("")
     setRGB(0, 0, 0)
 
 
-def measurePi():
+def piTemperature():
     temp = os.popen("vcgencmd measure_temp").readline()
-    return (temp.replace("temp=", "")[0:4])
+    return temp[5:9]
 
 
-def moistClassifier():
-    if moist < 300:
-        moistResult = 'Dry'
-    elif moist < 600:
-        moistResult = 'Moist'
+def moistureClassifier():
+    if moisture < 300:
+        moistureResult = 'Dry'
+    elif moisture < 600:
+        moistureResult = 'Moist'
     else:
-        moistResult = 'Wet'      
-    return moistResult
+        moistureResult = 'Wet'
+    return moistureResult
 
 
 def printSensorData():
@@ -87,24 +87,27 @@ def printSensorData():
     else:
         print("Couldn't get temperature/humidity sensor readings")
 
-    print('Moisture: {0} ({1})'.format(moist, moistClass))
+    print('Moisture: {0} ({1})'.format(moisture, moistureClass))
     print("Lights: {} ({})".format(lightValue, "On" if lightsOn else "Off"))
     print("Height: {} cm".format(calcPlantHeight()))
-    print("Raspberry pi: {}'C".format(measurePi()))
+    print("Raspberry pi: {}'C".format(piTemperature()))
     if lightsOn:
-        print("Image path: {}\n".format(imagePath))
+        print("Image location: {}\n".format(image))
     else:
         print("")
 
 
 def takePicture():
+    timestamp = time.strftime("%Y-%m-%d--%H-%M")
+    imagePath = '/home/pi/Desktop/images/{}.jpg'.format(timestamp)
     with picamera.PiCamera() as camera:
         camera.start_preview()
         camera.awb_mode = 'sunlight'
         time.sleep(5)
         camera.capture(imagePath)
         camera.stop_preview()
-    
+    return imagePath
+
 
 def waterPlants():
     digitalwrite(waterPump, 1)
@@ -118,31 +121,29 @@ while True:
     try:
         # Time loop
         t0 = time.time()
-        
+
         # Get sensor readings
         lightValue = analogRead(lightSensor)
-        distValue = ultrasonicRead(distSensor)
-        moist = analogRead(moistSensor)
+        ultraSonicDistance = ultrasonicRead(distanceSensor)
+        moisture = analogRead(moistureSensor)
         [temp, humidity] = dht(tempSensor, 0)
-        
+
         currentTime = time.ctime()
-        moistClass = moistClassifier()
+        moistureClass = moistureClassifier()
         lightsOn = lightValue > lightThreshold
-        
+
         # Lights on
         if lightsOn:
             # Turn on red LED when ground is dry, when lightsOn
-            digitalWrite(ledRed, 1) if moistClass == 'Dry' else digitalWrite(ledRed, 0)
-            
-            # Take picture every loop, while lightsOn
-            timestamp = time.strftime("%Y-%m-%d--%H-%M")
-            imagePath = '/home/pi/Desktop/images/{}.jpg'.format(timestamp)
-            takePicture()
-            
+            digitalWrite(ledRed, 1) if moistureClass == 'Dry' else digitalWrite(ledRed, 0)
+
+            # Take picture every loop, while lightsOn, store path in image variable
+            image = takePicture()
+
             # PrintSensorData and appendCSV, before displayText
             printSensorData()
             appendCSV()
-            
+
             # Textdisplay when lightsOn
             displayText()
 
@@ -150,11 +151,12 @@ while True:
         else:
             # In case ground was dry, when lightsOn
             digitalWrite(ledRed, 0)
-            imagePath = ''
-            
+            # No picture when lights off, empty string for appendCSV
+            image = ''
+
             printSensorData()
             appendCSV()
-        
+
         loopTime = time.time() - t0
         time.sleep(checkInterval - loopTime)
 
@@ -162,7 +164,7 @@ while True:
         digitalWrite(ledRed, 0)
         setText("")
         setRGB(0, 0, 0)
-        print("Leds and RGB shutdown safely")
+        print(" Leds and RGB shutdown safely")
         break
     except IOError:
         print("Error")
