@@ -57,9 +57,7 @@ def calcPlantHeight():
 
 def displayText():
     setRGB(0, 128, 64)  # background color led display
-    text = str(temp) + "C " + str(humidity) + "% " + str(piTemperature() +
-                                                         "\n" + str(moisture) + " " + moistureClass + " " + str(lightValue) + " on")
-    setText(text)
+    setText("{}C {}% {}\n{} ({}) {}".format(temp, humidity, piTemperature(), moisture, moistureClass, lightValue))
     time.sleep(displayInterval)
     setText("")
     setRGB(0, 0, 0)
@@ -151,6 +149,7 @@ while True:
         else:
             # In case ground was dry, when lightsOn
             digitalWrite(ledRed, 0)
+            
             # No picture when lights off, empty string for appendCSV
             image = ''
 
