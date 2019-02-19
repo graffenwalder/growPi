@@ -124,7 +124,7 @@ while True:
         lightValue = analogRead(lightSensor)
         ultraSonicDistance = ultrasonicRead(distanceSensor)
         moisture = analogRead(moistureSensor)
-        [temp, humidity] = dht(tempSensor, 0)
+        [temp, humidity] = dht(tempSensor, 1)
 
         currentTime = time.ctime()
         moistureClass = moistureClassifier()

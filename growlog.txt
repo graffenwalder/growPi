@@ -7,3 +7,5 @@
 2019-02-05 11:40:11 - Added 100ml Water
 2019-02-05 12:20:12 - Migrated to bigger SD card
 2019-02-05 14:30:02 - Added picamera, takes picture every loop
+2019-02-19 11:00:20 - Added 50ml Water
+2019-02-19 17:10:24 - Changed dht sensor dht11->dht22 (temperatue and humidity)

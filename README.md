@@ -15,7 +15,7 @@ Current sensors attached: moisture, light, temperature, humidity and distance.
   - [Moisture Sensor](http://wiki.seeedstudio.com/Grove-Moisture_Sensor/)
   - [Light Sensor](http://wiki.seeedstudio.com/Grove-Light_Sensor/)
   - [LED Red (5mm)](http://wiki.seeedstudio.com/Grove-Red_LED/)
-  - [Temperature & Humidity Sensor (DHT11)](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
+  - [Temperature & Humidity Sensor (DHT22)](http://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/)
   - [Ultrasonic Ranger](http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
   - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
 - Optional:
