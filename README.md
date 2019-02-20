@@ -1,7 +1,7 @@
 # growPi
 
 Raspberry pi, with GrovePi+ to read plant data. Data is saved to `temp.csv`. Takes a picture on every interval.
-If moisture readings are "Dry", for 3 consecutive intervals, the waterpump will activate.
+If moisture readings are "Dry" for 3 consecutive intervals, the waterpump will activate.
 
 Current sensors: moisture, light, temperature, humidity and distance.
 
@@ -19,7 +19,7 @@ Current sensors: moisture, light, temperature, humidity and distance.
   - [Temperature & Humidity Sensor (DHT22)](http://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/)
   - [Ultrasonic Ranger](http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
   - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
-  - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
+  - [Mini Fan](http://wiki.seeedstudio.com/Grove-Mini_Fan/)
 - [3-6V Waterpump](https://www.bitsandparts.eu/Motoren-Servos-and-Drivers/Doseringspomp-Waterpomp-dompelpomp-3-6V-120l-h/p116339)
   - Aquarium tubing
   - Watercontainer (bottle, bucket.....)
@@ -49,12 +49,12 @@ $ sudo i2cdetect -y 1
 ```
 - If the install was succesfull, you should see "04" in the output.
 - See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) if unsuccesfull.
-6. Connect waterpump to Mini fan board:
+6. Connect waterpump to Mini Fan board:
 - Carefully take off the plastic shell of both the jumperwires, on one end.
 - Pull the waterpump wires through the small holes of the shells.
 - Put the waterpump wires in the stripped opening of the jumperwires and attach them with some plyers
 - Pull back the shells.
-- Attach the other end of the jumperwires to the minifan board, where the mini fan plug normaly goes.
+- Attach the other end of the jumperwires to the Mini Fan board, where the Mini Fan plug normaly goes.
 - Attach aquarium tubing and put in watercontainer.
 ![waterpump](/images/waterpump.jpg)
 7. Connect sensors to the GrovePi ports:

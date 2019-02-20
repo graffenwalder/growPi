@@ -126,7 +126,7 @@ while True:
         # Time loop
         t0 = time.time()
 
-            # Get sensor readings
+        # Get sensor readings
         lightValue = analogRead(lightSensor)
         ultraSonicDistance = ultrasonicRead(distanceSensor)
         moisture = analogRead(moistureSensor)
