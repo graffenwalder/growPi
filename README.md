@@ -1,8 +1,9 @@
 # growPi
 
-Raspberry pi, with GrovePi+ to read plant data. Data is saved to `temp.csv`.
+Raspberry pi, with GrovePi+ to read plant data. Data is saved to `temp.csv`. Takes a picture on every interval.
+If moisture readings are "Dry", for 3 consecutive intervals, the waterpump will activate.
 
-Current sensors attached: moisture, light, temperature, humidity and distance.
+Current sensors: moisture, light, temperature, humidity and distance.
 
 ![growPi](/images/plantsense.jpg)
 
@@ -18,6 +19,11 @@ Current sensors attached: moisture, light, temperature, humidity and distance.
   - [Temperature & Humidity Sensor (DHT22)](http://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/)
   - [Ultrasonic Ranger](http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
   - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
+  - [LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/)
+- [3-6V Waterpump](https://www.bitsandparts.eu/Motoren-Servos-and-Drivers/Doseringspomp-Waterpomp-dompelpomp-3-6V-120l-h/p116339)
+  - Aquarium tubing
+  - Watercontainer (bottle, bucket.....)
+  - 2 female to female jumper wires
 - Optional:
   - Heatsink for Raspberry Pi
   - Raspberry Pi Camera (Board V2 - 8MP)
@@ -43,12 +49,21 @@ $ sudo i2cdetect -y 1
 ```
 - If the install was succesfull, you should see "04" in the output.
 - See [GrovePi Setup](https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/setting-software/) if unsuccesfull.
-6. Connect sensors to the GrovePi ports:
+6. Connect waterpump to Mini fan board:
+- Carefully take off the plastic shell of both the jumperwires, on one end.
+- Pull the waterpump wires through the small holes of the shells.
+- Put the waterpump wires in the stripped opening of the jumperwires and attach them with some plyers
+- Pull back the shells.
+- Attach the other end of the jumperwires to the minifan board, where the mini fan plug normaly goes.
+- Attach aquarium tubing and put in watercontainer.
+![waterpump](/images/waterpump.jpg)
+7. Connect sensors to the GrovePi ports:
 
 | Module/Sensor                  | Port  | 
 | -------------------------------|-------|
 | Moisture Sensor                | A0    |
 | Light Sensor                   | A1    |
+| Mini Fan board (waterpump)	 | D2	 |
 | LED Red                        | D3    |
 | Temperature & Humidity Sensor  | D4    |
 | Ultrasonic Ranger              | D6    |
@@ -56,7 +71,7 @@ $ sudo i2cdetect -y 1
 
 Feel free to use different ports, just be sure to change them in `growpi.py`.
 
-7. Launch growPi:
+8. Launch growPi:
 ```
 $ python growpi.py
 ```
@@ -69,10 +84,14 @@ $ python growpi.py
 - [x] Add display, that displays current data
 - [x] Save sensordata to csv file
 - [x] Add camera
-- [ ] Add waterpump
-- [ ] Write watering logic
+- [x] Add waterpump
+- [x] Write watering logic
+- [x] Write waterpump setup
 - [ ] Get stable sensor data from Ultrasonic Ranger
-- [ ] Write lamp highering logic
 - [ ] Make Webapp/site that auto updates with sensordata
 - [ ] Add Jupyter notebook with EDA if interesting
 - [x] Should really change ledmoist.py filename
+
+## Notes
+
+- The waterpump in this setup produces about 5ml/second. Make sure to test how much your setup produces, results may vary.

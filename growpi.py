@@ -8,14 +8,15 @@ from grovepi import *
 from grove_rgb_lcd import *
 
 # Connect the Grove Moisture Sensor to analog port A0, Light Sensor to A1, Display to IC2
-# Connect Red Led to D3, Temp Sensor to D4, UltrasonicRanger to D6
+# Connect Waterpump to D2, Red Led to D3, Temp Sensor to D4, UltrasonicRanger to D6
 
 # Sensors
 moistureSensor = 0
 lightSensor = 1
+waterPump = 2
 ledRed = 3
 tempSensor = 4
-#waterPump = 5
+
 distanceSensor = 6
 
 # Heights
@@ -26,14 +27,14 @@ displayInterval = 1 * 60  # How long should the display stay on?
 checkInterval = 10 * 60  # How long before loop starts again?
 lightThreshold = 10  # Value above threshold is lightsOn
 
-mlSecond = 20  # How much ml water the waterpump produces per second
-waterAmount = 500  # How much ml water should be given to the plants
+mlSecond = 5  # How much ml water the waterpump produces per second
+waterAmount = 50  # How much ml water should be given to the plants
 
 
 # Write data to csv
 def appendCSV():
     fields = ['Time', 'Temperature', 'Humidity', 'Moisture', 'MoistureClass',
-              'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance', 'ImagePath']
+              'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance', 'ImagePath', 'WaterGiven']
 
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -47,7 +48,8 @@ def appendCSV():
                          'PiTemperature': (piTemperature()),
                          'Height': (calcPlantHeight()),
                          'SonicDistance': ultraSonicDistance,
-                         'ImagePath': image
+                         'ImagePath': image,
+                         'WaterGiven': waterGiven
                          })
 
 
@@ -57,7 +59,8 @@ def calcPlantHeight():
 
 def displayText():
     setRGB(0, 128, 64)  # background color led display
-    setText("{}C {}% {}\n{} ({}) {}".format(temp, humidity, piTemperature(), moisture, moistureClass, lightValue))
+    setText("{}C {}% {}\n{} ({}) {}".format(temp, humidity,
+                                            piTemperature(), moisture, moistureClass, lightValue))
     time.sleep(displayInterval)
     setText("")
     setRGB(0, 0, 0)
@@ -89,6 +92,8 @@ def printSensorData():
     print("Lights: {} ({})".format(lightValue, "On" if lightsOn else "Off"))
     print("Height: {} cm".format(calcPlantHeight()))
     print("Raspberry pi: {}'C".format(piTemperature()))
+    if waterGiven:
+        print("Water given: {}ml".format(waterGiven))
     if lightsOn:
         print("Image location: {}\n".format(image))
     else:
@@ -108,19 +113,20 @@ def takePicture():
 
 
 def waterPlants():
-    digitalwrite(waterPump, 1)
+    digitalWrite(waterPump, 1)
     time.sleep(waterAmount / mlSecond)
-    digitalwrite(waterPump, 0)
-    print("Watering complete at: " + time.ctime())
+    digitalWrite(waterPump, 0)
 
 
 # Main Loop
+
+waterCheck = []
 while True:
     try:
         # Time loop
         t0 = time.time()
 
-        # Get sensor readings
+            # Get sensor readings
         lightValue = analogRead(lightSensor)
         ultraSonicDistance = ultrasonicRead(distanceSensor)
         moisture = analogRead(moistureSensor)
@@ -133,7 +139,21 @@ while True:
         # Lights on
         if lightsOn:
             # Turn on red LED when ground is dry, when lightsOn
-            digitalWrite(ledRed, 1) if moistureClass == 'Dry' else digitalWrite(ledRed, 0)
+            if moistureClass == 'Dry':
+                digitalWrite(ledRed, 1)
+                waterCheck.append(moisture)
+
+                # Get at least 3 consecutive values under 300, before waterPlants
+                if len(waterCheck) == 3:
+                    waterPlants()
+                    waterGiven = waterAmount
+                else:
+                    waterGiven = 0
+
+            else:
+                waterCheck = []
+                waterGiven = 0
+                digitalWrite(ledRed, 0)
 
             # Take picture every loop, while lightsOn, store path in image variable
             image = takePicture()
@@ -147,9 +167,12 @@ while True:
 
         # Lights off
         else:
+            waterCheck = []
+            waterGiven = 0
+
             # In case ground was dry, when lightsOn
             digitalWrite(ledRed, 0)
-            
+
             # No picture when lights off, empty string for appendCSV
             image = ''
 
@@ -160,6 +183,7 @@ while True:
         time.sleep(checkInterval - loopTime)
 
     except KeyboardInterrupt:
+        digitalWrite(waterPump, 0)
         digitalWrite(ledRed, 0)
         setText("")
         setRGB(0, 0, 0)
