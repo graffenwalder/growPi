@@ -147,6 +147,7 @@ while True:
                 if len(waterCheck) == 3:
                     waterPlants()
                     waterGiven = waterAmount
+                    waterCheck = []
                 else:
                     waterGiven = 0
 
