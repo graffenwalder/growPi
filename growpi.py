@@ -27,6 +27,7 @@ displayInterval = 1 * 60  # How long should the display stay on?
 checkInterval = 10 * 60  # How long before loop starts again?
 lightThreshold = 10  # Value above threshold is lightsOn
 
+dryIntervals = 5  # How many consecutive dry intervals before waterPlants
 mlSecond = 5  # How much ml water the waterpump produces per second
 waterAmount = 50  # How much ml water should be given to the plants
 
@@ -143,8 +144,8 @@ while True:
                 digitalWrite(ledRed, 1)
                 waterCheck.append(moisture)
 
-                # Get at least 3 consecutive values under 300, before waterPlants
-                if len(waterCheck) == 3:
+                # Get x consecutive dryIntervals, before waterPlants
+                if len(waterCheck) >= dryIntervals:
                     waterPlants()
                     waterGiven = waterAmount
                     waterCheck = []
