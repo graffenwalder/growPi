@@ -16,7 +16,6 @@ lightSensor = 1
 waterPump = 2
 ledRed = 3
 tempSensor = 4
-
 distanceSensor = 6
 
 # Heights
@@ -182,7 +181,8 @@ while True:
             appendCSV()
 
         loopTime = time.time() - t0
-        time.sleep(checkInterval - loopTime)
+        if checkInterval > loopTime:
+            time.sleep(checkInterval - loopTime)
 
     except KeyboardInterrupt:
         digitalWrite(waterPump, 0)
