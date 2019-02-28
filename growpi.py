@@ -3,7 +3,9 @@ import math
 import os
 import picamera
 import time
+import secrets
 
+from ftplib import FTP
 from grovepi import *
 from grove_rgb_lcd import *
 
@@ -112,6 +114,15 @@ def takePicture():
     return imagePath
 
 
+def uploadCSV():
+    ftp = FTP(secrets.FTP_URL)
+    ftp.login(user=secrets.USERNAME, passwd = secrets.PASSWORD)
+    ftp.cwd('/growpi/')
+    filename = 'temp.csv'
+    ftp.storbinary('STOR '+filename, open(filename, 'rb'))
+    ftp.quit()
+
+
 def waterPlants():
     digitalWrite(waterPump, 1)
     time.sleep(waterAmount / mlSecond)
@@ -162,6 +173,7 @@ while True:
             # PrintSensorData and appendCSV, before displayText
             printSensorData()
             appendCSV()
+            uploadCSV()
 
             # Textdisplay when lightsOn
             displayText()
@@ -179,6 +191,7 @@ while True:
 
             printSensorData()
             appendCSV()
+            uploadCSV()
 
         loopTime = time.time() - t0
         if checkInterval > loopTime:
