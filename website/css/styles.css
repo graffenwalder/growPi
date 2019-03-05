@@ -24,3 +24,16 @@ a:visited {
   text-decoration: none;
   color: grey;
 }
+
+.description {
+  padding: 5px;
+  text-align: center;
+  margin-top: 15px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+#img-latest {
+  width: 90%;
+  margin-bottom: 10px;
+}

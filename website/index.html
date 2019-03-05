@@ -34,14 +34,14 @@
     <h1>GrowPi</h1>
     <p>The GrowPi, is a Raspberry Pi 3B+, with a grovePi+. It has moisture, temperature, humidity and a sonic distance sensor.
       <br>
-      Every interval:
+      Every interval(10 mins):
       <ul>
         <li>It reads all sensor data</li>
         <li>Appends the data to a csv file</li>
         <li>Displays data on the RGB LCD Display</li>
         <li>Uploads the CSV Data to this site</li>
-        <li>Takes a picture, with the picamera</li>
-        <li>Waters the plant, when it logs 5 "dry intervals"</li>
+        <li>Takes a picture, with the picamera, when lights are on</li>
+        <li>Waters the plant, when it logs 5 consecutive "dry intervals"</li>
       </ul>
     </p>
     <img src="plantsense.jpg" alt="growPi in action" class="img-rounded">
@@ -49,10 +49,8 @@
 
   <footer id="footer">
     <p>
-      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a></p>
-
-    <p class="copyright">© Copyright 2019 Ben10</p>
-
+      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a>
+    </p>
   </footer>
 
 

@@ -32,15 +32,40 @@
   <div class="container">
     <h1>CONTACT</h1>
     <p>See more on <a href="https://github.com/graffenwalder/growPi">Github</a></p>
-
+    <img src="" alt="Latest growpi pic" class="img-rounded" id="img-latest">
+    <p>Latest picture: </p>
+    <p id="lastP"></p>
   </div>
+
+  <script>
+    function getData() {
+      Plotly.d3.csv("temp.csv", function(data) {
+        processData(data);
+      });
+
+    }
+
+    function processData(allRows) {
+
+      var images = [];
+
+      for (var i = 0; i < allRows.length; i++) {
+        row = allRows[i];
+        if (row.Image) {
+          images.push(row.Image);
+        }
+      }
+      var latestFilePath = "images/" + images[images.length - 1]
+      document.getElementById("img-latest").src = latestFilePath;
+      document.getElementById("lastP").innerHTML = latestFilePath;
+    }
+    getData();
+  </script>
 
   <footer id="footer">
     <p>
-      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a></p>
-
-    <p class="copyright">© Copyright 2019 Ben10</p>
-
+      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a>
+    </p>
   </footer>
 
 </body>
