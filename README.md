@@ -99,7 +99,7 @@ $ python growpi.py
 - [x] Add waterpump
 - [x] Write watering logic
 - [x] Write waterpump setup
-- ~~[ ] Get stable sensor data from Ultrasonic Ranger~~
+- [ ] ~~Get stable sensor data from Ultrasonic Ranger~~
 - [x] Make Webapp/site that auto updates with sensordata
 - [ ] Add Jupyter notebook with EDA if interesting
 - [x] Should really change ledmoist.py filename
