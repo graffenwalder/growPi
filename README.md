@@ -3,7 +3,7 @@
 Raspberry pi, with GrovePi+ to read plant data. Data is saved to `temp.csv`. Takes a picture on every interval.
 If moisture readings are "Dry" for 3 consecutive intervals, the waterpump will activate.
 
-Current sensors: moisture, light, temperature, humidity and distance.
+Sensors: moisture, light, temperature, humidity and distance.
 
 ![growPi](/images/plantsense.jpg)
 
@@ -71,7 +71,18 @@ $ sudo i2cdetect -y 1
 
 Feel free to use different ports, just be sure to change them in `growpi.py`.
 
-8. Launch growPi:
+## Website Setup
+
+8. In your growpi directory, create a file called `secrets.py`.
+9. Inside it fill out your ftp url, username and password:
+```
+FTP_URL = '<your_ftp_server>'
+USERNAME = '<your_ftp_username>'
+PASSWORD = '<your_ftp_password>'
+```
+10. Create a directory called `growpi` on your website.
+11. Copy the contents of the website directory into it.
+12. Launch growPi:
 ```
 $ python growpi.py
 ```
@@ -87,11 +98,12 @@ $ python growpi.py
 - [x] Add waterpump
 - [x] Write watering logic
 - [x] Write waterpump setup
-- [ ] Get stable sensor data from Ultrasonic Ranger
-- [ ] Make Webapp/site that auto updates with sensordata
+~~- [ ] Get stable sensor data from Ultrasonic Ranger~~
+- [x] Make Webapp/site that auto updates with sensordata
 - [ ] Add Jupyter notebook with EDA if interesting
 - [x] Should really change ledmoist.py filename
 
 ## Notes
 
 - The waterpump in this setup produces about 5ml/second. Make sure to test how much your setup produces, results may vary.
+- If you don't want to use the website, just remove all uploadCSV() and UploadImage() functions from the main loop.

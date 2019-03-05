@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<script src="ejs.js"></script>
+
+<head>
+  <meta charset="utf-8">
+  <title>GrowPi - Temperature</title>
+  <meta charset="utf-8">
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Font Awsome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand"><a href="index.html">GROW PI</a></p>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- 6 -->
+        <li id="Temperature"><a href="temp.html">TEMPERATURE</a></li>
+        <li id="Moisture"><a href="moisture.html">MOISTURE</a></li>
+        <li id="contact"><a href="contact.html">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+</head>
+
+<body>
+  <div class="container" id="tempDiv">
+
+  </div>
+  <script>
+    function makeplot() {
+      Plotly.d3.csv("temp.csv", function(data) {
+        processData(data);
+      });
+
+    }
+
+    function processData(allRows) {
+
+      console.log(allRows);
+      var x = [],
+        temp = [],
+        pitemp = [],
+        hum = [];
+
+      for (var i = 0; i < allRows.length; i++) {
+        row = allRows[i];
+        x.push(row.Time);
+        if (row.Temperature > 0) {
+          temp.push(row.Temperature);
+        }
+        if (row.Humidity > 30) {
+          hum.push(row.Humidity);
+        }
+        pitemp.push(row.PiTemperature);
+      }
+      console.log('X', x, 'Y', temp, hum, pitemp);
+      makePlotly(x, temp, hum, pitemp);
+    }
+
+    function makePlotly(x, temp, hum, pitemp) {
+      var plotDiv = document.getElementById("plot");
+      var traces = [{
+          x: x,
+          y: temp,
+          name: "Temperature"
+        },
+        {
+          x: x,
+          y: hum,
+          name: "Humidity"
+        },
+        {
+          x: x,
+          y: pitemp,
+          name: "PiTemperature"
+        }
+      ];
+
+      Plotly.newPlot('tempDiv', traces, {
+        title: 'Temperature vs Humidity'
+      });
+    }
+    makeplot();
+  </script>
+
+  <footer id="footer">
+    <p>
+      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a></p>
+
+    <p class="copyright">© Copyright 2019 Ben10</p>
+
+  </footer>
+
+</body>
+
+
+</html>

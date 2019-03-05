@@ -32,11 +32,13 @@ dryIntervals = 5  # How many consecutive dry intervals before waterPlants
 mlSecond = 5  # How much ml water the waterpump produces per second
 waterAmount = 50  # How much ml water should be given to the plants
 
+localImagePath = '/home/pi/Desktop/images/'  # Where the images are stored
+
 
 # Write data to csv
 def appendCSV():
     fields = ['Time', 'Temperature', 'Humidity', 'Moisture', 'MoistureClass',
-              'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance', 'ImagePath', 'WaterGiven']
+              'LightValue', 'Lights', 'PiTemperature', 'Height', 'SonicDistance', 'Image', 'WaterGiven']
 
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -50,7 +52,7 @@ def appendCSV():
                          'PiTemperature': (piTemperature()),
                          'Height': (calcPlantHeight()),
                          'SonicDistance': ultraSonicDistance,
-                         'ImagePath': image,
+                         'Image': image,
                          'WaterGiven': waterGiven
                          })
 
@@ -97,30 +99,41 @@ def printSensorData():
     if waterGiven:
         print("Water given: {}ml".format(waterGiven))
     if lightsOn:
-        print("Image location: {}\n".format(image))
+        print("Image: {}\n".format(image))
     else:
         print("")
 
 
 def takePicture():
     timestamp = time.strftime("%Y-%m-%d--%H-%M")
-    imagePath = '/home/pi/Desktop/images/{}.jpg'.format(timestamp)
+    image = '{}.jpg'.format(timestamp)
+    imagePath = localImagePath + image
     with picamera.PiCamera() as camera:
         camera.start_preview()
         camera.awb_mode = 'sunlight'
         time.sleep(5)
         camera.capture(imagePath)
         camera.stop_preview()
-    return imagePath
+    return image
 
 
 def uploadCSV():
     ftp = FTP(secrets.FTP_URL)
-    ftp.login(user=secrets.USERNAME, passwd = secrets.PASSWORD)
+    ftp.login(user=secrets.USERNAME, passwd=secrets.PASSWORD)
     ftp.cwd('/growpi/')
     filename = 'temp.csv'
-    ftp.storbinary('STOR '+filename, open(filename, 'rb'))
+    ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
     ftp.quit()
+
+
+def uploadImage():
+    if image:
+        ftp = FTP(secrets.FTP_URL)
+        ftp.login(user=secrets.USERNAME, passwd=secrets.PASSWORD)
+        ftp.cwd('/growpi/images/')
+        filename = localImagePath + image
+        ftp.storbinary('STOR ' + image, open(filename, 'rb'))
+        ftp.quit()
 
 
 def waterPlants():
@@ -173,6 +186,7 @@ while True:
             # PrintSensorData and appendCSV, before displayText
             printSensorData()
             appendCSV()
+            uploadImage()
             uploadCSV()
 
             # Textdisplay when lightsOn
