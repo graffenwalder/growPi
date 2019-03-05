@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>GrowPi</title>
+  <title>GrowPi - Timelapse</title>
   <meta charset="utf-8">
   <!-- Plotly.js -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -30,21 +30,15 @@
 </head>
 
 <body>
+
   <div class="container">
-    <h1>GrowPi</h1>
-    <p>The GrowPi, is a Raspberry Pi 3B+, with a grovePi+. It has moisture, temperature, humidity and a sonic distance sensor.
-      <br>
-      Every interval(10 mins):
-      <ul>
-        <li>It reads all sensor data</li>
-        <li>Appends the data to a csv file</li>
-        <li>Displays data on the RGB LCD Display</li>
-        <li>Uploads the CSV Data to this site</li>
-        <li>Takes a picture, with the picamera, when lights are on</li>
-        <li>Waters the plant, when it logs 5 consecutive "dry intervals"</li>
-      </ul>
-    </p>
-    <img src="plantsense.jpg" alt="growPi in action" class="img-rounded">
+    <h1>TIMELAPSE</h1>
+    <video width="600" controls>
+      <source src="timelapse.mp4" type="video/mp4">
+      Your browser does not support HTML5 video and or mp4.
+    </video>
+    <br>
+    <p>This video was created with <a href="https://github.com/graffenwalder/growPi/blob/master/timelapse.py">timelapse.py</a></p>
   </div>
 
   <footer id="footer">

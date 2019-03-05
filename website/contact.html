@@ -22,6 +22,7 @@
         <!-- 6 -->
         <li id="Temperature"><a href="temp.html">TEMPERATURE</a></li>
         <li id="Moisture"><a href="moisture.html">MOISTURE</a></li>
+        <li id="Timelapse"><a href="timelapse.html">TIMELAPSE</a></li>
         <li id="contact"><a href="contact.html">CONTACT</a></li>
       </ul>
     </div>
@@ -33,8 +34,9 @@
   <div class="container">
     <h1>CONTACT</h1>
     <p>See more on <a href="https://github.com/graffenwalder/growPi">Github</a></p>
-    <img src="" alt="Latest growpi pic" class="img-rounded" id="img-latest">
-    <p>Latest picture: </p>
+    <br>
+    <p>Last picture taken: </p>
+    <img src="" alt="Latest growpi pic" class="img-rounded" id="img-last">
     <p id="lastP"></p>
   </div>
 
@@ -56,7 +58,7 @@
         }
       }
       var latestFilePath = "images/" + images[images.length - 1]
-      document.getElementById("img-latest").src = latestFilePath;
+      document.getElementById("img-last").src = latestFilePath;
       document.getElementById("lastP").innerHTML = latestFilePath;
     }
     getData();
