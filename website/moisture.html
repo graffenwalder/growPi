@@ -54,6 +54,8 @@
         x.push(row.Time);
         if (row.Moisture > 0) {
           moisture.push(row.Moisture);
+        } else {
+          moisture.push(moisture[moisture.length -1])
         }
         dryThresh.push(300);
         if (row.WaterGiven > 0) {
@@ -66,6 +68,9 @@
           });
         }
       }
+      function getAverage(total, num) {
+  return (total + num) / 5;
+}
       makePlotly(x, moisture, water, dryThresh);
     }
 

@@ -43,7 +43,6 @@
 
     function processData(allRows) {
 
-      console.log(allRows);
       var x = [],
         temp = [],
         pitemp = [],
@@ -54,13 +53,18 @@
         x.push(row.Time);
         if (row.Temperature > 0) {
           temp.push(row.Temperature);
+        } else {
+          // Push previous value
+          temp.push(temp[temp.length -1])
         }
         if (row.Humidity > 30) {
           hum.push(row.Humidity);
+        } else {
+          // Push previous value
+          hum.push(hum[hum.length -1])
         }
         pitemp.push(row.PiTemperature);
       }
-      console.log('X', x, 'Y', temp, hum, pitemp);
       makePlotly(x, temp, hum, pitemp);
     }
 

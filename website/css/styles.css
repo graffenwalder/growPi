@@ -32,6 +32,9 @@ a:visited {
   margin-left: 40px;
   margin-right: 40px;
 }
+.foot-icon {
+  margin-right: 5px;
+}
 
 #img-latest {
   width: 90%;
