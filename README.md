@@ -72,7 +72,7 @@ $ sudo i2cdetect -y 1
 Feel free to use different ports, just be sure to change them in `growpi.py`.
 
 ## Website Setup
-
+![website screenshot](/images/webscreenshot.jpg)
 8. In your growpi directory, create a file called `secrets.py`.
 9. Inside it fill out your ftp url, username and password:
 ```
@@ -98,7 +98,7 @@ $ python growpi.py
 - [x] Add waterpump
 - [x] Write watering logic
 - [x] Write waterpump setup
-~~- [ ] Get stable sensor data from Ultrasonic Ranger~~
+- ~~[ ] Get stable sensor data from Ultrasonic Ranger~~
 - [x] Make Webapp/site that auto updates with sensordata
 - [ ] Add Jupyter notebook with EDA if interesting
 - [x] Should really change ledmoist.py filename
