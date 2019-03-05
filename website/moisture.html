@@ -29,25 +29,23 @@
 </head>
 
 <body>
-  <div class="container" id="moistDiv">
 
+  <div class="container" id="moistDiv">
   </div>
+
   <script>
     function makeplot() {
       Plotly.d3.csv("temp.csv", function(data) {
         processData(data);
       });
-
     }
 
     function processData(allRows) {
 
-      console.log(allRows);
       var x = [],
         moisture = [],
         dryThresh = [],
         water = [];
-
 
       for (var i = 0; i < allRows.length; i++) {
         row = allRows[i];
@@ -55,7 +53,8 @@
         if (row.Moisture > 0) {
           moisture.push(row.Moisture);
         } else {
-          moisture.push(moisture[moisture.length -1])
+          // Push previous value
+          moisture.push(moisture[moisture.length - 1])
         }
         dryThresh.push(300);
         if (row.WaterGiven > 0) {
@@ -68,9 +67,6 @@
           });
         }
       }
-      function getAverage(total, num) {
-  return (total + num) / 5;
-}
       makePlotly(x, moisture, water, dryThresh);
     }
 
@@ -100,6 +96,7 @@
     }
     makeplot();
   </script>
+
   <div class="description">
     <p>Graph logs the ground moisture. When the ground moisture is lower than
       300 it registers as "Dry". When there are 5 consecutive "Dry" intervals,

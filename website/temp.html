@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<script src="ejs.js"></script>
 
 <head>
   <meta charset="utf-8">
@@ -30,15 +29,15 @@
 </head>
 
 <body>
-  <div class="container" id="tempDiv">
 
+  <div class="container" id="tempDiv">
   </div>
+
   <script>
     function makeplot() {
       Plotly.d3.csv("temp.csv", function(data) {
         processData(data);
       });
-
     }
 
     function processData(allRows) {
@@ -55,13 +54,13 @@
           temp.push(row.Temperature);
         } else {
           // Push previous value
-          temp.push(temp[temp.length -1])
+          temp.push(temp[temp.length - 1])
         }
         if (row.Humidity > 30) {
           hum.push(row.Humidity);
         } else {
           // Push previous value
-          hum.push(hum[hum.length -1])
+          hum.push(hum[hum.length - 1])
         }
         pitemp.push(row.PiTemperature);
       }
@@ -73,7 +72,7 @@
       var traces = [{
           x: x,
           y: temp,
-          name: "Temperature"
+          name: "Temperature (°C)"
         },
         {
           x: x,
@@ -83,7 +82,7 @@
         {
           x: x,
           y: pitemp,
-          name: "PiTemperature"
+          name: "PiTemperature (°C)"
         }
       ];
 
@@ -105,6 +104,5 @@
   </footer>
 
 </body>
-
 
 </html>
