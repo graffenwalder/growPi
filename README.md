@@ -73,6 +73,7 @@ Feel free to use different ports, just be sure to change them in `growpi.py`.
 
 ## Website Setup
 ![website screenshot](/images/webscreenshot.jpg)
+
 8. In your growpi directory, create a file called `secrets.py`.
 9. Inside it fill out your ftp url, username and password:
 ```
