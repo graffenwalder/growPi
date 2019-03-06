@@ -16,6 +16,10 @@ footer {
   width: 100%;
 }
 
+video {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 a:link {
   text-decoration: none;
   color: grey;
@@ -27,15 +31,15 @@ a:visited {
 }
 
 .description {
-  padding: 5px;
-  text-align: center;
   margin-top: 15px;
-  margin-left: 40px;
-  margin-right: 40px;
 }
 
 .foot-icon {
   margin-right: 5px;
+}
+
+.graphDiv {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #img-last {

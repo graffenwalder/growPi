@@ -30,8 +30,10 @@
 </head>
 
 <body>
-
-  <div class="container" id="moistDiv">
+<div class="container">
+  <h1>Ground Moisture</h1>
+</div>
+  <div class="container graphDiv" id="moistDiv">
   </div>
 
   <script>
@@ -50,7 +52,7 @@
 
       for (var i = 0; i < allRows.length; i++) {
         row = allRows[i];
-        x.push(row.Time);
+        x.push(row.Time.slice(4, 16));
         if (row.Moisture > 0) {
           moisture.push(row.Moisture);
         } else {
@@ -62,7 +64,7 @@
           water.push({
             'showarrow': true,
             'text': (' + ' + (row.WaterGiven) + 'ml'),
-            'x': row.Time,
+            'x': row.Time.slice(4, 16),
             'y': row.Moisture,
             'ay': 40
           });
@@ -91,14 +93,25 @@
       ];
 
       Plotly.newPlot('moistDiv', traces, {
-        title: 'Ground Moisture',
-        annotations: water
+        annotations: water,
+        autosize: true,
+        showlegend: true,
+        legend: {
+          orientation: 'h',
+          y: 700
+        },
+        margin: {
+          l: 30,
+          r: 20,
+          b: 100,
+          t: 60,
+        }
       });
     }
     makeplot();
   </script>
 
-  <div class="description">
+  <div class="description container">
     <p>Graph logs the ground moisture. When the ground moisture is lower than
       300 it registers as "Dry". When there are 5 consecutive "Dry" intervals,
       the waterpump activates and gives 50ml water.</p>

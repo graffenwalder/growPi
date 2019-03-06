@@ -30,8 +30,12 @@
 </head>
 
 <body>
+  <div class="container">
+    <h1>Temperature vs Humidity</h1>
+  </div>
 
-  <div class="container" id="tempDiv">
+  <div class="container graphDiv" id="tempDiv">
+
   </div>
 
   <script>
@@ -50,7 +54,7 @@
 
       for (var i = 0; i < allRows.length; i++) {
         row = allRows[i];
-        x.push(row.Time);
+        x.push(row.Time.slice(4,16));
         if (row.Temperature > 0) {
           temp.push(row.Temperature);
         } else {
@@ -88,13 +92,24 @@
       ];
 
       Plotly.newPlot('tempDiv', traces, {
-        title: 'Temperature vs Humidity'
+        autosize: true,
+        showlegend: true,
+        legend: {
+          orientation: 'h',
+          y: 200
+        },
+        margin: {
+          l: 30,
+          r: 20,
+          b: 100,
+          t: 60,
+        }
       });
     }
     makeplot();
   </script>
 
-  <div class="description">
+  <div class="description container">
     <p>Graph logs the humidity, room temperature and the temperature of the Raspberry Pi.</p>
   </div>
 

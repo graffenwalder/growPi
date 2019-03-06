@@ -107,5 +107,5 @@ $ python growpi.py
 
 - The waterpump in this setup produces about 5ml/second. Make sure to test how much your setup produces, results may vary.
 - If you don't want to use the website, just remove all uploadCSV() and UploadImage() functions from the main loop.
-- If you want to get the timelapse video, download timelapse.py and secrets.py, and run `timelapse.py` on your local machine.
-- Or upload it to a server and add it to a cronjob, so the video will get updated automaticly.
+- If you want to get the timelapse video, download timelapse.py and secrets.py, and run `timelapse.py` on your local machine. 
+Or upload them to a server and add `timelapse.py` to a cronjob, so the video will get updated automaticly.
