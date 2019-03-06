@@ -5,14 +5,13 @@ import subprocess
 import secrets
 
 mp4File = 'timelapse.mp4'
-localImagePath = "/home/berend/Desktop/images/"
-
+localImagePath = "/root/growpi/images/"
 
 def getAllImages():
     start = datetime.now()
     ftp = FTP(secrets.FTP_URL)
     ftp.login(user=secrets.USERNAME, passwd=secrets.PASSWORD)
-    ftp.cwd('/growpi/images/')
+    ftp.cwd('/images/')
     # Get All Files
     files = ftp.nlst()
     files.remove('..')
@@ -35,7 +34,6 @@ def getAllImages():
 def uploadMP4():
     ftp = FTP(secrets.FTP_URL)
     ftp.login(user=secrets.USERNAME, passwd=secrets.PASSWORD)
-    ftp.cwd('/growpi/')
     ftp.storbinary('STOR ' + mp4File, open(mp4File, 'rb'))
     print("Succesfully uploaded: " + mp4File)
     ftp.quit()
@@ -47,6 +45,7 @@ def makeTimelapse(frames=5):
     print("Created: " + mp4File)
 
 def main():
+    os.chdir(localImagePath)
     getAllImages()
     makeTimelapse(24)
     uploadMP4()

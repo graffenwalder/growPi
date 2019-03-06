@@ -81,9 +81,8 @@ FTP_URL = '<your_ftp_server>'
 USERNAME = '<your_ftp_username>'
 PASSWORD = '<your_ftp_password>'
 ```
-10. Create a directory called `growpi` on your website.
-11. Copy the contents of the website directory into it.
-12. Launch growPi:
+10. Copy the contents of the website directory, to the root of your website.
+11. Launch growPi:
 ```
 $ python growpi.py
 ```
@@ -108,3 +107,5 @@ $ python growpi.py
 
 - The waterpump in this setup produces about 5ml/second. Make sure to test how much your setup produces, results may vary.
 - If you don't want to use the website, just remove all uploadCSV() and UploadImage() functions from the main loop.
+- If you want to get the timelapse video, download timelapse.py and secrets.py, and run `timelapse.py` on your local machine.
+- Or upload it to a server and add it to a cronjob, so the video will get updated automaticly.

@@ -120,7 +120,6 @@ def takePicture():
 def uploadCSV():
     ftp = FTP(secrets.FTP_URL)
     ftp.login(user=secrets.USERNAME, passwd=secrets.PASSWORD)
-    ftp.cwd('/growpi/')
     filename = 'temp.csv'
     ftp.storbinary('STOR ' + filename, open(filename, 'rb'))
     ftp.quit()
@@ -130,7 +129,7 @@ def uploadImage():
     if image:
         ftp = FTP(secrets.FTP_URL)
         ftp.login(user=secrets.USERNAME, passwd=secrets.PASSWORD)
-        ftp.cwd('/growpi/images/')
+        ftp.cwd('/images/')
         filename = localImagePath + image
         ftp.storbinary('STOR ' + image, open(filename, 'rb'))
         ftp.quit()
