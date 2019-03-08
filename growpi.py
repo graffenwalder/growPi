@@ -104,6 +104,14 @@ def printSensorData():
         print("")
 
 
+# Calculates time to next tenth minute and sleeps
+def sleepTimer():
+    currentMinute = time.strftime("%M")
+    currentSecond = time.strftime("%S")
+    sleeptime = (10 - int(currentMinute[1])) * 60 - int(currentSecond)
+    time.sleep(sleeptime)
+
+
 def takePicture():
     timestamp = time.strftime("%Y-%m-%d--%H-%M")
     image = '{}.jpg'.format(timestamp)
@@ -146,8 +154,8 @@ def waterPlants():
 waterCheck = []
 while True:
     try:
-        # Time loop
-        t0 = time.time()
+        # Start loop at every tenth minute of the hour
+        sleepTimer()
 
         # Get sensor readings
         lightValue = analogRead(lightSensor)
@@ -174,6 +182,7 @@ while True:
                 else:
                     waterGiven = 0
 
+            # Ground not dry
             else:
                 waterCheck = []
                 waterGiven = 0
@@ -205,10 +214,6 @@ while True:
             printSensorData()
             appendCSV()
             uploadCSV()
-
-        loopTime = time.time() - t0
-        if checkInterval > loopTime:
-            time.sleep(checkInterval - loopTime)
 
     except KeyboardInterrupt:
         digitalWrite(waterPump, 0)

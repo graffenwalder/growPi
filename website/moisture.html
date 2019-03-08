@@ -52,6 +52,7 @@
 
       for (var i = 0; i < allRows.length; i++) {
         row = allRows[i];
+        // Slicing: Thu Mar  7 22:04:31 2019 -> Mar  7 22:04
         x.push(row.Time.slice(4, 16));
         if (row.Moisture > 0) {
           moisture.push(row.Moisture);
@@ -111,7 +112,7 @@
     makeplot();
   </script>
 
-  <div class="description container">
+  <div class="description container lastDiv">
     <p>Graph logs the ground moisture. When the ground moisture is lower than
       300 it registers as "Dry". When there are 5 consecutive "Dry" intervals,
       the waterpump activates and gives 50ml water.</p>
